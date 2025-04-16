@@ -9,8 +9,12 @@ let tasks = JSON.parse(fs.readFileSync('./data/tasks.json', 'utf8'));
 app.use(express.json());
 app.use(express.static('public'));
 
-
-let currentId = 2;
+// Fonction pour générer un nouvel ID unique
+function generateNewId() {
+  if (tasks.length === 0) return 1;
+  const maxId = Math.max(...tasks.map(task => task.id));
+  return maxId + 1;
+}
 
 function findTaskIndexById(id) {
   return tasks.findIndex(task => task.id === id);
@@ -41,13 +45,13 @@ function createTask(req, res) {
   }
 
   const task = {
-    id: currentId++,
+    id: generateNewId(),
     name: req.body.name.trim(),
     completed: false
   };
 
   tasks.push(task);
-  saveTasksToFile(); // Sauvegarde dans le fichier tasks.json
+  saveTasksToFile();
   console.log('Nouvelle tâche créée:', JSON.stringify(task, null, 2));
   res.status(201).json(task);
 }
