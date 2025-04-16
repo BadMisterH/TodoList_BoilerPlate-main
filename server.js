@@ -12,11 +12,6 @@ app.use(express.static('public'));
 
 let currentId = 2;
 
-// Helper Functions
-function findTaskById(id) {
-  return tasks.find(task => task.id === id);
-}
-
 function findTaskIndexById(id) {
   return tasks.findIndex(task => task.id === id);
 }
@@ -52,7 +47,7 @@ function createTask(req, res) {
   };
 
   tasks.push(task);
-  saveTasksToFile(); // Sauvegarde dans le fichier
+  saveTasksToFile(); // Sauvegarde dans le fichier tasks.json
   console.log('Nouvelle tâche créée:', JSON.stringify(task, null, 2));
   res.status(201).json(task);
 }
@@ -93,7 +88,7 @@ function updateTask(req, res) {
     completed: req.body.completed !== undefined ? req.body.completed : tasks[taskIndex].completed
   };
 
-  saveTasksToFile(); // Sauvegarde dans le fichier
+  saveTasksToFile(); // Sauvegarde dans le fichier tasks.json
   console.log(`Tâche ${id} mise à jour via PUT`);
   res.json(tasks[taskIndex]);
 }
@@ -115,7 +110,7 @@ function patchTask(req, res) {
   }
 
   tasks[taskIndex] = { ...tasks[taskIndex], ...req.body };
-  saveTasksToFile(); // Sauvegarde dans le fichier
+  saveTasksToFile(); // Sauvegarde dans le fichier tasks.json
   res.json(tasks[taskIndex]);
 }
 
@@ -139,8 +134,13 @@ app.patch('/tasks/:id', patchTask);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Une erreur interne est survenue" });
+  if (process.env.NODE_ENV === 'development') {
+    console.error(err.stack);
+    res.status(500).json({ message: err.message, stack: err.stack });
+  } else {
+    console.error(err.stack);
+    res.status(500).json({ message: "Une erreur interne est survenue" });
+  }
 });
 
 // Start Server

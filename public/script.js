@@ -113,7 +113,6 @@ async function unfinishTask(id) {
       body: JSON.stringify({ completed: false }),
     });
     const updatedTask = await response.json();
-    s
     const taskEl = document.querySelector(`#taskListCompleted li[data-id="${id}"]`);
     if (taskEl) taskEl.remove();
     renderTask(updatedTask);
