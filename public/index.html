@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container-btn">
+      <span class="btn"></span>
+    </div>
+    <div id="app">
+      <h1>Ma To-Do List</h1>
+      <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Entrez une nouvelle tâche...">
+        <button id="addTaskBtn">Ajouter</button>
+      </div>
+
+      <div class="theme-toggle">
+        <button class="theme-toggle-btn" aria-label="Toggle dark mode">
+          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-icon">☀️</span>
+        </button>
+      </div>
+
+      <div class="filter-buttons">
+        <button onclick="filterTasks('all')" class="active">Toutes</button>
+        <button onclick="filterTasks('inProgress')">En cours</button>
+        <button onclick="filterTasks('completed')">Terminées</button>
+      </div>
+
+      <div class="taches">
+        <div class="pasTermine">
+          <h2>Tâches en cours</h2>
+          <ul id="taskList"></ul>
+        </div>
+        <div class="termine">
+          <h2>Tâches terminées</h2>
+          <ul id="taskListCompleted"></ul>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
