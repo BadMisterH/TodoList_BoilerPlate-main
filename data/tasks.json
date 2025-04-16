@@ -1,12 +1,1 @@
-[
-  {
-    "id": 1,
-    "name": "eeee",
-    "completed": false
-  },
-  {
-    "id": 2,
-    "name": "bb",
-    "completed": false
-  }
-]
+[{ "id": 1, "name": "Exemple de tâche", "completed": false }]
