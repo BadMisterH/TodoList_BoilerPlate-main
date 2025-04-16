@@ -2,7 +2,6 @@
 
 Bonjour, je vous présente mon application de gestion de tâches.
 
-
 ## Architecture du projet
 
 L'application est structurée en deux parties distinctes :
@@ -18,7 +17,7 @@ L'application est structurée en deux parties distinctes :
   - Accessible même pour les développeurs débutants
 
 - **Stockage des données** : 
-  - Utilisation d'un fichier JSON pour la persistance
+  - Un fichier JSON contenant toutes les tâches est utilisé dans le dossier data pour assurer la persistance des données.
   - Solution idéale pour un prototype
   - Évite la complexité d'une base de données relationnelle
 
@@ -35,11 +34,27 @@ L'application est structurée en deux parties distinctes :
 
 ## Choix d'architecture JavaScript
 
-Pour ce projet, j'ai opté pour une architecture monolithique plutôt que modulaire. Voici pourquoi :
+L'application est divisée en deux parties principales :
+- **Frontend** (script.js) : Gère l'interface utilisateur et les interactions
+- **Backend** (server.js) : Gère la logique métier et les données
 
-1. **Simplicité** : Un seul fichier facilite la compréhension globale du projet
-2. **Rapidité** : Configuration minimale requise
-3. **Clarté** : Vue d'ensemble immédiate du fonctionnement
+### Pourquoi un seul fichier script.js ?
+- Code court et bien organisé (400 lignes)
+- Sections claires avec commentaires
+- Pas besoin de gérer les dépendances
+- Débogage plus simple
+
+### Pourquoi un seul fichier server.js ?
+- API REST simple et efficace
+- Routes bien organisées
+- Validation des données centralisée
+- Maintenance facilitée
+
+### Pourquoi fetch plutôt qu'axios ?
+- **Simplicité** : fetch est natif, pas besoin d'installer de dépendance
+- **Légèreté** : pas de bibliothèque supplémentaire à charger
+- **Compatibilité** : supporté par tous les navigateurs modernes
+- **Suffisance** : les fonctionnalités de fetch sont amplement suffisantes pour ce projet
 
 ## Points forts
 
@@ -66,7 +81,7 @@ Le choix de développer sans framework frontend a été motivé par plusieurs ra
 - **Flexibilité** : Adaptation facile aux besoins spécifiques
 
 ### Backend (Express.js uniquement)
-Le choix de se limiter à Express.js plutôt qu’à d’autres frameworks backend se justifie par les raisons suivantes :
+Le choix de se limiter à Express.js plutôt qu'à d'autres frameworks backend se justifie par les raisons suivantes :
 
 - **Simplicité** : Express.js offre exactement ce dont nous avons besoin
 - **Contrôle** : Meilleure maîtrise de la logique métier
@@ -74,7 +89,7 @@ Le choix de se limiter à Express.js plutôt qu’à d’autres frameworks backe
 - **Apprentissage** : Compréhension approfondie des concepts fondamentaux
 
 ### Pourquoi pas d'imports JavaScript ?
-L'absence d'imports JavaScript dans ce projet est un choix délibéré pour :
+L'absence d'imports JavaScript dans ce projet est un choix voulu pour :
 
 - **Déploiement facile** : aucun bundler ni configuration nécessaire. 
 - **Compatibilité** : fonctionne sur tous les navigateurs modernes. 
@@ -85,15 +100,15 @@ L'absence d'imports JavaScript dans ce projet est un choix délibéré pour :
 
 Ce projet représente une approche pragmatique du développement web :
 - Simple mais soigné
-  - Chaque fonction joue un rôle bien précis
-  - Évolutif selon les besoins
-  - Excellent point de départ pour l'apprentissage
+- Chaque fonction joue un rôle bien précis
+- Évolutif selon les besoins
+- Excellent point de départ pour l'apprentissage
 
 ### Retour de votre part
 
-J’ai choisi de me concentrer sur la qualité du code et son architecture, plutôt que d’ajouter de nouvelles fonctionnalités.
-Je sais qu’un projet peut toujours être amélioré, peu importe son niveau d’avancement.
-C’est justement pour ça que je suis vraiment ouvert à vos retours, de préférence des points à améliorer, bienveillants et constructifs.
+J'ai choisi de me concentrer sur la qualité du code et son architecture, plutôt que d'ajouter de nouvelles fonctionnalités.
+Je sais qu'un projet peut toujours être amélioré, peu importe son niveau d'avancement.
+C'est justement pour ça que je suis vraiment ouvert à vos retours, de préférence des points à améliorer, bienveillants et constructifs.
 
-Vos remarques comptent énormément pour moi. Elles m’aideront à grandir, à corriger mes erreurs et à devenir un développeur meilleur et plus réfléchi.
-Un grand merci d’avance pour le temps que vous y consacrerez. 🙏
+Vos remarques comptent énormément pour moi. Elles m'aideront à grandir, à corriger mes erreurs et à devenir un développeur meilleur et plus réfléchi.
+Un grand merci d'avance pour le temps que vous y consacrerez. 🙏
