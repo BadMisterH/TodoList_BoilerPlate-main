@@ -138,13 +138,8 @@ app.patch('/tasks/:id', patchTask);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-  if (process.env.NODE_ENV === 'development') {
-    console.error(err.stack);
-    res.status(500).json({ message: err.message, stack: err.stack });
-  } else {
-    console.error(err.stack);
-    res.status(500).json({ message: "Une erreur interne est survenue" });
-  }
+  console.error(err.stack);
+  res.status(500).json({ message: "Une erreur est survenue" });
 });
 
 // Start Server
