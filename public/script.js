@@ -10,25 +10,25 @@ addTaskBtn.addEventListener("click", handleAddTask);
 
 // Gère l'initialisation du thème (clair/sombre) à partir du stockage local et permet de basculer entre les thèmes.
 function initializeTheme() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  const themeToggleBtn = document.querySelector('.theme-toggle-btn');
-  
-  if (savedTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
+  const savedTheme = localStorage.getItem("theme") || "light";
+  const themeToggleBtn = document.querySelector(".theme-toggle-btn");
+
+  if (savedTheme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
   }
-  
-  themeToggleBtn.addEventListener('click', toggleTheme);
+
+  themeToggleBtn.addEventListener("click", toggleTheme);
 }
 
 function toggleTheme() {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+
   if (isDark) {
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('theme', 'light');
+    document.documentElement.removeAttribute("data-theme");
+    localStorage.setItem("theme", "light");
   } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('theme', 'dark');
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
   }
 }
 
@@ -113,7 +113,9 @@ async function unfinishTask(id) {
       body: JSON.stringify({ completed: false }),
     });
     const updatedTask = await response.json();
-    const taskEl = document.querySelector(`#taskListCompleted li[data-id="${id}"]`);
+    const taskEl = document.querySelector(
+      `#taskListCompleted li[data-id="${id}"]`,
+    );
     if (taskEl) taskEl.remove();
     renderTask(updatedTask);
   } catch (error) {
@@ -121,26 +123,27 @@ async function unfinishTask(id) {
   }
 }
 
-
 // Affiche les tâches terminées et non terminées
 function renderAllTasks(tasks) {
-  const completedTasks = tasks.filter(task => task.completed);
-  completedTasks.forEach(task => renderTaskCompleted(task));
-  tasks.forEach(task => renderTask(task));
+  const completedTasks = tasks.filter((task) => task.completed);
+  completedTasks.forEach((task) => renderTaskCompleted(task));
+  tasks.forEach((task) => renderTask(task));
 }
 
 function renderTask(task) {
   if (task.completed) return;
-  const existingTask = document.querySelector(`#taskList li[data-id="${task.id}"]`);
+  const existingTask = document.querySelector(
+    `#taskList li[data-id="${task.id}"]`,
+  );
   const li = existingTask || document.createElement("li");
   li.dataset.id = task.id;
   li.className = "";
 
   li.innerHTML = `
-    <span>${task.name} ✗</span>
-    <button onclick="showDeleteConfirmation('${task.id}')">🗑️ Supprimer</button>
-    <button onclick="showCompleteConfirmation('${task.id}')">✓ Terminer</button>
-    <button onclick="showEditModal('${task.id}', '${task.name.replace(/'/g, "\\'").replace(/"/g, "&quot;")}')">✏️ Modifier</button>
+    <span style="font-weight: bold;">${task.name} ✗</span>
+    <button onclick="showDeleteConfirmation('${task.id}')">🗑️ <span id="btn-text">Supprimer</span></button>
+    <button onclick="showCompleteConfirmation('${task.id}')">✓ <span id="btn-text">Terminer</span></button>
+    <button onclick="showEditModal('${task.id}', '${task.name.replace(/'/g, "\\'").replace(/"/g, "&quot;")}')">✏️ <span id="btn-text">Modifier</span></button>
   `;
 
   if (!existingTask) {
@@ -151,15 +154,17 @@ function renderTask(task) {
 function renderTaskCompleted(task) {
   if (!task.completed) return;
 
-  const existingTask = document.querySelector(`#taskListCompleted li[data-id="${task.id}"]`);
+  const existingTask = document.querySelector(
+    `#taskListCompleted li[data-id="${task.id}"]`,
+  );
   const li = existingTask || document.createElement("li");
   li.dataset.id = task.id;
   li.className = "completed";
 
   li.innerHTML = `
-    <span>${task.name} ✓</span>
-    <button onclick="showDeleteConfirmation('${task.id}')">🗑️ Supprimer</button>
-    <button onclick="unfinishTask('${task.id}')">❌ Pas terminé</button>
+    <span style="font-weight: bold;">${task.name} ✓</span>
+    <button onclick="showDeleteConfirmation('${task.id}')">🗑️ <span id="btn-text">Supprimer</span></button>
+    <button onclick="unfinishTask('${task.id}')">❌ <span id="btn-text">Pas terminé</span></button>
   `;
 
   if (!existingTask) {
@@ -169,16 +174,16 @@ function renderTaskCompleted(task) {
 
 // Modal Management
 function createModal(content, className) {
-  const overlay = document.createElement('div');
-  overlay.className = 'overlay';
-  
-  const modal = document.createElement('div');
+  const overlay = document.createElement("div");
+  overlay.className = "overlay";
+
+  const modal = document.createElement("div");
   modal.className = className;
   modal.innerHTML = content;
-  
+
   document.body.appendChild(overlay);
   document.body.appendChild(modal);
-  
+
   return { overlay, modal };
 }
 
@@ -198,32 +203,40 @@ function handleAddTask() {
 }
 
 function showEmptyTaskAlert() {
-  const { overlay, modal } = createModal(`
+  const { overlay, modal } = createModal(
+    `
     <p>Veuillez entrer un nom pour la tâche</p>
     <div class="confirmation-alert-buttons">
       <button class="cancel-btn">OK</button>
     </div>
-  `, 'confirmation-alert');
-  
-  modal.querySelector('.cancel-btn').addEventListener('click', () => {
+  `,
+    "confirmation-alert",
+  );
+
+  modal.querySelector(".cancel-btn").addEventListener("click", () => {
     removeModal(overlay, modal);
     taskInput.focus();
   });
-  
+
   setupEscapeKey(modal, overlay);
 }
 
 function showDeleteConfirmation(id) {
-  const { overlay, modal } = createModal(`
+  const { overlay, modal } = createModal(
+    `
     <p>Êtes-vous sûr de vouloir supprimer cette tâche ?</p>
     <div class="confirmation-alert-buttons">
       <button class="cancel-btn">Annuler</button>
       <button class="confirm-btn">Supprimer</button>
     </div>
-  `, 'confirmation-alert');
-  
-  modal.querySelector('.cancel-btn').addEventListener('click', () => removeModal(overlay, modal));
-  modal.querySelector('.confirm-btn').addEventListener('click', async () => {
+  `,
+    "confirmation-alert",
+  );
+
+  modal
+    .querySelector(".cancel-btn")
+    .addEventListener("click", () => removeModal(overlay, modal));
+  modal.querySelector(".confirm-btn").addEventListener("click", async () => {
     const success = await deleteTaskRequest(id);
     if (success) {
       const taskEl = document.querySelector(`li[data-id="${id}"]`);
@@ -231,21 +244,26 @@ function showDeleteConfirmation(id) {
     }
     removeModal(overlay, modal);
   });
-  
+
   setupEscapeKey(modal, overlay);
 }
 
 function showCompleteConfirmation(id) {
-  const { overlay, modal } = createModal(`
+  const { overlay, modal } = createModal(
+    `
     <p>Êtes-vous sûr de vouloir marquer cette tâche comme terminée ?</p>
     <div class="confirmation-alert-buttons">
       <button class="cancel-btn">Annuler</button>
       <button class="confirm-btn">Terminer</button>
     </div>
-  `, 'confirmation-alert');
-  
-  modal.querySelector('.cancel-btn').addEventListener('click', () => removeModal(overlay, modal));
-  modal.querySelector('.confirm-btn').addEventListener('click', async () => {
+  `,
+    "confirmation-alert",
+  );
+
+  modal
+    .querySelector(".cancel-btn")
+    .addEventListener("click", () => removeModal(overlay, modal));
+  modal.querySelector(".confirm-btn").addEventListener("click", async () => {
     const updatedTask = await completeTask(id);
     if (updatedTask) {
       const taskEl = document.querySelector(`#taskList li[data-id="${id}"]`);
@@ -254,26 +272,31 @@ function showCompleteConfirmation(id) {
     }
     removeModal(overlay, modal);
   });
-  
+
   setupEscapeKey(modal, overlay);
 }
 
 function showEditModal(id, currentName) {
-  const { overlay, modal } = createModal(`
+  const { overlay, modal } = createModal(
+    `
     <h3>Modifier la tâche</h3>
     <input type="text" id="editTaskInput" value="${currentName}" autofocus>
     <div class="edit-task-modal-buttons">
       <button class="cancel-btn">Annuler</button>
       <button class="save-btn">Enregistrer</button>
     </div>
-  `, 'edit-task-modal');
-  
-  const input = modal.querySelector('#editTaskInput');
+  `,
+    "edit-task-modal",
+  );
+
+  const input = modal.querySelector("#editTaskInput");
   input.focus();
   input.select();
-  
-  modal.querySelector('.cancel-btn').addEventListener('click', () => removeModal(overlay, modal));
-  modal.querySelector('.save-btn').addEventListener('click', async () => {
+
+  modal
+    .querySelector(".cancel-btn")
+    .addEventListener("click", () => removeModal(overlay, modal));
+  modal.querySelector(".save-btn").addEventListener("click", async () => {
     const newName = input.value.trim();
     if (newName) {
       const updatedTask = await updateTask(id, { name: newName });
@@ -292,25 +315,25 @@ function showEditModal(id, currentName) {
       input.focus();
     }
   });
-  
-  input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      modal.querySelector('.save-btn').click();
+
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      modal.querySelector(".save-btn").click();
     }
   });
-  
+
   setupEscapeKey(modal, overlay);
 }
 
 // Utility Functions
 function setupEscapeKey(modal, overlay) {
   const handleEscape = (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       removeModal(overlay, modal);
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener("keydown", handleEscape);
     }
   };
-  document.addEventListener('keydown', handleEscape);
+  document.addEventListener("keydown", handleEscape);
 }
 
 function handleError(error, message = "Une erreur est survenue") {
@@ -322,40 +345,38 @@ function handleError(error, message = "Une erreur est survenue") {
 function filterTasks(filterType) {
   const pasTermineSection = document.querySelector(".pasTermine");
   const termineSection = document.querySelector(".termine");
-  
-  switch(filterType) {
-    case 'all':
-      pasTermineSection.style.display = 'block';
-      termineSection.style.display = 'block';
+
+  switch (filterType) {
+    case "all":
+      pasTermineSection.style.display = "block";
+      termineSection.style.display = "block";
       break;
-    case 'inProgress':
-      pasTermineSection.style.display = 'block';
-      termineSection.style.display = 'none';
+    case "inProgress":
+      pasTermineSection.style.display = "block";
+      termineSection.style.display = "none";
       break;
-    case 'completed':
-      pasTermineSection.style.display = 'none';
-      termineSection.style.display = 'block';
+    case "completed":
+      pasTermineSection.style.display = "none";
+      termineSection.style.display = "block";
       break;
   }
-  
-  document.querySelectorAll('.filter-buttons button').forEach(button => {
-    button.classList.remove('active');
+
+  document.querySelectorAll(".filter-buttons button").forEach((button) => {
+    button.classList.remove("active");
   });
-  event.target.classList.add('active');
+  event.target.classList.add("active");
 }
 
-const btn = document.querySelector('.container-btn');
+const btn = document.querySelector(".container-btn");
 
 btn.addEventListener("click", () => {
   const result = btn.classList.toggle("end");
 
-  if(result){
+  if (result) {
     document.body.classList.add("dark");
-    document.getElementById("app").classList.add("dark")
-
-  }else{
-    document.body.classList.remove("dark")
-    document.getElementById("app").classList.remove("dark")
+    document.getElementById("app").classList.add("dark");
+  } else {
+    document.body.classList.remove("dark");
+    document.getElementById("app").classList.remove("dark");
   }
-
-})  
+});

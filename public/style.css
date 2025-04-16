@@ -1,15 +1,10 @@
 /* Variables */
 :root {
   /* Light mode colors */
-  --primary-color: #6366f1;
-  --primary-hover: #4f46e5;
-  --primary-active: #4338ca;
-  --danger-color: #ef4444;
-  --danger-hover: #dc2626;
-  --info-color: #3b82f6;
-  --info-hover: #2563eb;
-  --warning-color: #f59e0b;
+  --primary-color : #6366f1;
+  --warning-color: #e8a22b;
   --warning-hover: #d97706;
+  --color-modif: #ad5e00;
   --background-color: #f8fafc;
   --card-background: #ffffff;
   --text-color: #1e293b;
@@ -22,21 +17,15 @@
 
 /* Dark mode colors */
 [data-theme="dark"] {
-  --primary-color: #818cf8;
-  --primary-hover: #6366f1;
-  --primary-active: #4f46e5;
-  --danger-color: #f87171;
-  --danger-hover: #ef4444;
-  --info-color: #60a5fa;
-  --info-hover: #3b82f6;
-  --warning-color: #fbbf24;
+  --warning-color: #e8a22b;
   --warning-hover: #f59e0b;
   --background-color: #1e293b;
   --card-background: #0f172a;
   --text-color: #f8fafc;
   --text-secondary: #94a3b8;
   --border-color: #334155;
-  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  --box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* Theme Toggle */
@@ -95,7 +84,7 @@
 }
 
 body {
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
   line-height: 1.5;
@@ -135,15 +124,28 @@ h2 {
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
 }
 
-h2::before {
+.pasTermine h2::after{
   content: "";
-  display: inline-block;
-  width: 8px;
-  height: 8px;
+  position: absolute;
+  height: 15px;
+  width: 15px;
   border-radius: 50%;
-  background: var(--gradient-primary);
+  background: var(--warning-color);
+  right: 0;
+}
+
+
+.termine h2::after{
+  content: "";
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  right: 0;
 }
 
 /* Form Elements */
@@ -235,7 +237,8 @@ button {
   margin-top: 40px;
 }
 
-.pasTermine, .termine {
+.pasTermine,
+.termine {
   width: 100%;
   padding: 32px;
   background-color: var(--background-color);
@@ -245,12 +248,14 @@ button {
 }
 
 /* Task Items */
-#taskList, #taskListCompleted {
+#taskList,
+#taskListCompleted {
   list-style: none;
   padding: 0;
 }
 
-#taskList li, #taskListCompleted li {
+#taskList li,
+#taskListCompleted li {
   display: flex;
   align-items: center;
   padding: 20px;
@@ -261,62 +266,72 @@ button {
   border: 1px solid var(--border-color);
 }
 
-#taskList li:hover, #taskListCompleted li:hover {
+#taskList li:hover,
+#taskListCompleted li:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.1);
   border-color: var(--primary-color);
 }
 
-#taskList li span, #taskListCompleted li span {
+#taskList li span,
+#taskListCompleted li span {
   flex: 1;
-  margin-right: 16px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--text-color);
 }
 
 /* Action Buttons */
-#taskList li button, #taskListCompleted li button {
+#taskList li button,
+#taskListCompleted li button {
   margin-left: 8px;
   padding: 10px 16px;
   font-size: 0.9rem;
   border-radius: 8px;
   min-width: 40px;
   height: 40px;
+  transition: all 0.2s ease;
 }
 
-#taskList li button:nth-child(2), #taskListCompleted li button:nth-child(2) {
-  background-color: var(--danger-color);
+/* Bouton Supprimer */
+#taskList li button:nth-child(2),
+#taskListCompleted li button:nth-child(2) {
+  background-color: #ef4444;
   color: white;
 }
 
-#taskList li button:nth-child(2):hover, #taskListCompleted li button:nth-child(2):hover {
-  background-color: var(--danger-hover);
-  transform: scale(1.05);
+#taskList li button:nth-child(2):hover,
+#taskListCompleted li button:nth-child(2):hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
 }
 
-#taskList li button:nth-child(3), #taskListCompleted li button:nth-child(3) {
-  background-color: var(--info-color);
+/* Bouton Modifier */
+#taskList li button:nth-child(3),
+#taskListCompleted li button:nth-child(3) {
+  background-color: #3b82f6;
   color: white;
 }
 
-#taskList li button:nth-child(3):hover, #taskListCompleted li button:nth-child(3):hover {
-  background-color: var(--info-hover);
-  transform: scale(1.05);
+#taskList li button:nth-child(3):hover,
+#taskListCompleted li button:nth-child(3):hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
 }
 
-#taskList li button:nth-child(4), #taskListCompleted li button:nth-child(4) {
-  background-color: var(--warning-color);
+/* Bouton Terminer */
+#taskList li button:nth-child(4),
+#taskListCompleted li button:nth-child(4) {
+  background-color: #22c55e;
   color: white;
 }
 
-#taskList li button:nth-child(4):hover, #taskListCompleted li button:nth-child(4):hover {
-  background-color: var(--warning-hover);
-  transform: scale(1.05);
+#taskList li button:nth-child(4):hover,
+#taskListCompleted li button:nth-child(4):hover {
+  background-color: #16a34a;
+  transform: translateY(-2px);
 }
 
 /* Status Indicators */
-#taskList li span::after, #taskListCompleted li span::after {
+#taskList li span::after,
+#taskListCompleted li span::after {
   content: "";
   display: inline-block;
   width: 8px;
@@ -347,11 +362,11 @@ button {
   .taches {
     gap: 24px;
   }
-  
+
   .filter-buttons {
     gap: 8px;
   }
-  
+
   .filter-buttons button {
     flex: 1;
     min-width: 100px;
@@ -366,14 +381,26 @@ button {
     width: 100%;
   }
 
-  #taskList li, #taskListCompleted li {
-    flex-wrap: wrap;
+  #taskList li,
+  #taskListCompleted li {
+    flex-direction: column;
     gap: 8px;
   }
 
-  #taskList li button, #taskListCompleted li button {
+  #taskList li button,
+  #taskListCompleted li button {
     flex: 1;
     margin: 0;
+    width: 80%;
+  }
+
+  #btn-text {
+    display: none;
+  }
+
+  #taskList li span,
+  #taskListCompleted li span {
+    font-size: 18px;
   }
 }
 
@@ -389,7 +416,8 @@ button {
   }
 }
 
-#taskList li, #taskListCompleted li {
+#taskList li,
+#taskListCompleted li {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
@@ -433,19 +461,25 @@ button {
 }
 
 .confirmation-alert .confirm-btn {
-  background-color: #ff4444;
+  background-color: #ef4444;
   color: white;
   font-weight: bold;
 }
 
 .confirmation-alert .confirm-btn:hover {
-  background-color: #cc0000;
+  background-color: #dc2626;
+  transform: translateY(-2px);
 }
 
 .confirmation-alert .cancel-btn {
-  background-color: var(--info-color);
+  background-color: #3b82f6;
   color: white;
   font-weight: bold;
+}
+
+.confirmation-alert .cancel-btn:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
 }
 
 .overlay {
@@ -512,27 +546,36 @@ button {
   transition: all 0.3s ease;
 }
 
+#btn-text {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
 .edit-task-modal .save-btn {
-  background-color: var(--info-color);
+  background-color: #22c55e;
   color: white;
   font-weight: bold;
 }
 
 .edit-task-modal .save-btn:hover {
-  background-color: var(--info-hover);
+  background-color: #16a34a;
+  transform: translateY(-2px);
 }
 
 .edit-task-modal .cancel-btn {
-  background-color: var(--text-secondary);
+  background-color: #ef4444;
   color: white;
   font-weight: bold;
 }
 
 .edit-task-modal .cancel-btn:hover {
-  background-color: var(--text-color);
-} 
+  background-color: #dc2626;
+  transform: translateY(-2px);
+}
 
-.container-btn{
+.container-btn {
   display: none;
 }
 
@@ -544,3 +587,4 @@ button {
   position: relative;
   background-color: blue;
 }
+

@@ -1,1 +1,7 @@
-[{ "id": 1, "name": "Exemple de tâche", "completed": false }]
+[
+  {
+    "id": 1,
+    "name": "e",
+    "completed": true
+  }
+]
