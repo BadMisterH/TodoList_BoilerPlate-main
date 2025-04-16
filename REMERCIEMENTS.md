@@ -7,3 +7,5 @@ Venant du milieu du développement front-end, j’ai souvent été le seul déve
 Je tiens à te remercier, Pierre-Louis, pour m’avoir offert cette opportunité. Merci de m’avoir donné la chance de montrer ce que je sais faire, d’apprendre et de progresser. Peu importe l’issue de ce test, je ne serai pas déçu : j’en ressors plus confiant, plus motivé, et surtout reconnaissant.
 
 Merci encore, sincèrement !
+
+Badr.
